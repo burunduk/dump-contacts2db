@@ -141,7 +141,9 @@ do
             if [ ${#cur_vcard_note} -ne 0 ]
                 then cur_vcard_note="NOTE:"$cur_vcard_note$'\n'
             fi
-            cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note$cur_vcard_photo$cur_vcard_im
+            cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel
+            cur_vcard=$cur_vcard$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note
+            cur_vcard=$cur_vcard$cur_vcard_photo$cur_vcard_im
             cur_vcard=$cur_vcard"END:VCARD"
             echo $cur_vcard
         fi
@@ -156,9 +158,9 @@ do
         cur_vcard_adr=""
         cur_vcard_email=""
         cur_vcard_url=""
+        cur_vcard_note=""
         cur_vcard_im=""
         cur_vcard_im_note=""
-        cur_vcard_note=""
         cur_vcard_photo=""
     fi
 
@@ -169,6 +171,7 @@ do
     #   * (7) vnd.android.cursor.item/identity (not exported by Android 4.1 Jelly Bean) 
     #   * (13) vnd.android.cursor.item/group_membership (not exported by Android 4.1 Jelly Bean) 
     #   * (14) vnd.com.google.cursor.item/contact_misc (not exported by Android 4.1 Jelly Bean) 
+    #   *      vnd.android.cursor.item/name
     case $cur_mimetype in
         vnd.android.cursor.item/nickname)
             if [ ${#cur_data1} -ne 0 ]
@@ -355,7 +358,9 @@ fi
 if [ ${#cur_vcard_note} -ne 0 ]
     then cur_vcard_note="NOTE:"$cur_vcard_note$'\n'
 fi
-cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note$cur_vcard_photo$cur_vcard_im
+cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel
+cur_vcard=$cur_vcard$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note
+cur_vcard=$cur_vcard$cur_vcard_photo$cur_vcard_im
 cur_vcard=$cur_vcard"END:VCARD"
 echo $cur_vcard
 
