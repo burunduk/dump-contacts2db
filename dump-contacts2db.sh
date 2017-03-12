@@ -184,11 +184,21 @@ do
     # add current row to current vcard
     # again, "mimetype" determines schema on a row-by-row basis
     # TODO: handle following types
-    #   * (6) vnd.android.cursor.item/sip_address
-    #   * (7) vnd.android.cursor.item/identity (not exported by Android 4.1 Jelly Bean) 
+    #   * (**) vnd.com.google.cursor.item/contact_misc (not exported by Android 4.1 Jelly Bean) 
+    #   * (14) vnd.android.cursor.item/website
     #   * (13) vnd.android.cursor.item/group_membership (not exported by Android 4.1 Jelly Bean) 
-    #   * (14) vnd.com.google.cursor.item/contact_misc (not exported by Android 4.1 Jelly Bean) 
-    #   *      vnd.android.cursor.item/name
+    #   * (12) vnd.android.cursor.item/note
+    #   * (11) vnd.android.cursor.item/contact_event
+    #   * (10) vnd.android.cursor.item/photo
+    #   * (9)  vnd.android.cursor.item/identity (not exported by Android 4.1 Jelly Bean) 
+    #   * (8)  vnd.android.cursor.item/postal-address_v2
+    #   * (7)  vnd.android.cursor.item/name
+    #   * (6)  vnd.android.cursor.item/sip_address
+    #   * (5)  vnd.android.cursor.item/phone_v2
+    #   * (4)  vnd.android.cursor.item/organization
+    #   * (3)  vnd.android.cursor.item/nickname
+    #   * (2)  vnd.android.cursor.item/im
+    #   * (1)  vnd.android.cursor.item/email_v2
     case $cur_mimetype in
         vnd.android.cursor.item/nickname)
             if [ ${#cur_data1} -ne 0 ]
