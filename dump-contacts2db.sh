@@ -51,7 +51,7 @@ function replace_newlines()
 
 # fetch contact data
 # TODO: order by account, with delimiters if possible
-record_set=$(sqlite3 $CONTACTS2_PATH "SELECT raw_contacts._id, raw_contacts.display_name, raw_contacts.display_name_alt, mimetypes.mimetype, $(replace_newlines data.data1 ), data.data2, $(replace_newlines data.data4), data.data5, data.data6, data.data7, data.data8, data.data9, data.data10, quote(data.data15) FROM raw_contacts, data, mimetypes WHERE raw_contacts.deleted = 0 AND raw_contacts._id = data.raw_contact_id AND data.mimetype_id = mimetypes._id ORDER BY raw_contacts._id, mimetypes._id, data.data2")
+record_set=$(sqlite3 $CONTACTS2_PATH "SELECT raw_contacts._id, raw_contacts.display_name, raw_contacts.display_name_alt, mimetypes.mimetype, $(replace_newlines data.data1), data.data2, data.data3, $(replace_newlines data.data4), data.data5, data.data6, data.data7, data.data8, data.data9, data.data10, quote(data.data15) FROM raw_contacts, data, mimetypes WHERE raw_contacts.deleted = 0 AND raw_contacts._id = data.raw_contact_id AND data.mimetype_id = mimetypes._id ORDER BY raw_contacts._id, mimetypes._id, data.data2")
 
 # modify Internal Field Separator for parsing rows from recordset
 IFS=`echo -e "\n\r"`
@@ -97,39 +97,43 @@ do
                 cur_data2=$col
                 ;;
 
-            7)    # data.data4
+            7)    # data.data3
+                cur_data3=$col
+                ;;
+
+            8)    # data.data4
                 cur_data4=$col
                 ;;
 
-            8)    # data.data5
+            9)    # data.data5
                 cur_data5=$col
                 ;;
 
-            9)    # data.data6
+            10)    # data.data6
                 cur_data6=$col
                 ;;
 
-            10)    # data.data7
+            11)    # data.data7
                 cur_data7=$col
                 ;;
 
-            11)    # data.data8
+            12)    # data.data8
                 cur_data8=$col
                 ;;
 
-            12)    # data.data9
+            13)    # data.data9
                 cur_data9=$col
                 ;;
 
-            13)    # data.data10
+            14)    # data.data10
                 cur_data10=$col
                 ;;
 
-            14)    # data.data15
+            15)    # data.data15
                 cur_data15=$col
                 ;;
 
-            15)    # contacts.contact_last_updated_timestamp
+            16)    # contacts.contact_last_updated_timestamp
                 last_updated_timestamp=$col
                 secs_since_epoch=$(($last_updated_timestamp/1000))
                 cur_rev=`date "+%Y-%m-%dT%H:%M:%SZ" --utc --date="@$secs_since_epoch"`
