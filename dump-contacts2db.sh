@@ -155,6 +155,7 @@ do
             if [ ${#cur_vcard_note} -ne 0 ]
                 then cur_vcard_note="NOTE:"$cur_vcard_note$'\n'
             fi
+            cur_vcard=$cur_vcard$cur_vcard_fn$cur_vcard_n
             cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel
             cur_vcard=$cur_vcard$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note
             cur_vcard=$cur_vcard$cur_vcard_bday$cur_vcard_anniversary$cur_vcard_photo$cur_vcard_im
@@ -164,7 +165,9 @@ do
 
         # init new vcard
         cur_vcard="BEGIN:VCARD"$'\n'"VERSION:3.0"$'\n'
-        cur_vcard=$cur_vcard"N:"$cur_display_name_alt$'\n'"FN:"$cur_display_name$'\n'
+        #cur_vcard=$cur_vcard"N:"$cur_display_name_alt$'\n'"FN:"$cur_display_name$'\n'
+        cur_vcard_n=""
+        cur_vcard_fn=""
         cur_vcard=$cur_vcard"REV:"$cur_rev$'\n'
         cur_vcard_nick=""
         cur_vcard_org=""
@@ -200,6 +203,12 @@ do
     #   * (2)  vnd.android.cursor.item/im
     #   * (1)  vnd.android.cursor.item/email_v2
     case $cur_mimetype in
+        vnd.android.cursor.item/name)
+            cur_vcard_n="N:"$cur_data3";"$cur_data2";"$cur_data5";"$cur_data4";"$cur_data6$'\n'
+            cur_vcard_fn=$cur_vcard_fn"FN:"$cur_data1$'\n'
+            # TODO: data7,8,9 - X-PHONETIC-*
+            ;;
+
         vnd.android.cursor.item/nickname)
             if [ ${#cur_data1} -ne 0 ]
                 then cur_vcard_nick="NICKNAME:"$cur_data1$'\n'
@@ -397,6 +406,7 @@ fi
 if [ ${#cur_vcard_note} -ne 0 ]
     then cur_vcard_note="NOTE:"$cur_vcard_note$'\n'
 fi
+cur_vcard=$cur_vcard$cur_vcard_fn$cur_vcard_n
 cur_vcard=$cur_vcard$cur_vcard_nick$cur_vcard_org$cur_vcard_title$cur_vcard_tel
 cur_vcard=$cur_vcard$cur_vcard_adr$cur_vcard_email$cur_vcard_url$cur_vcard_note
 cur_vcard=$cur_vcard$cur_vcard_bday$cur_vcard_anniversary$cur_vcard_photo$cur_vcard_im
